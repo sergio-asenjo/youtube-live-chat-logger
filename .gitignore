@@ -1,3 +1,9 @@
+# SQLite DB
+chat.db
+
+# Random
+notes.txt
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
