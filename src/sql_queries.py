@@ -1,18 +1,17 @@
 import sqlite3
 
-
-connection = sqlite3.connect("chat.db")
-c = connection.cursor()
+connection = sqlite3.connect("chat.sqlite")
+cursor = connection.cursor()
 
 def create_table():
     with connection:
-        c.execute("""
+        cursor.execute("""
                         CREATE TABLE IF NOT EXISTS chat (
                         channelId TEXT,
                         videoId TEXT NOT NULL,
                         videoTitle TEXT NOT NULL,
                         author TEXT NOT NULL,
-                        isChatModerator BOOLEAN DEFAULT(FALSE),
+                        isChatModerator INTEGER DEFAULT(0),
                         datetime TEXT NOT NULL,
                         message TEXT NOT NULL
                     );
@@ -21,7 +20,7 @@ def create_table():
 
 def insert_chat(msg_info):
     with connection:
-        q = ("""INSERT INTO
+        query = ("""INSERT INTO
                     chat(channelId,
                          videoId,
                          videoTitle,
@@ -30,6 +29,6 @@ def insert_chat(msg_info):
                          datetime,
                          message)
                 VALUES (?, ?, ?, ?, ?, ?, ?);
-            """)
-        c.execute(q, msg_info)
+                """)
+        cursor.execute(query, msg_info)
         return connection.commit()
